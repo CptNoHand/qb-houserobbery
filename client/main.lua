@@ -255,6 +255,7 @@ function PoliceCall()
             end
             local msg = "Attempted burglary into a house by one " .. gender .." at " .. streetLabel
             TriggerServerEvent("police:server:HouseRobberyCall", pos, msg, gender, streetLabel)
+            TriggerServerEvent('police:server:policeAlert', 'Robbery In Progress')
         end
     end
 end
