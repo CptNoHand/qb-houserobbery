@@ -3,7 +3,7 @@ local inside = false
 local currentHouse = nil
 local closestHouse
 local inRange
-local IsLockpicking = false
+local lockpicking = false
 local houseObj = {}
 local POIOffsets = nil
 local usingAdvanced = false
@@ -50,7 +50,6 @@ local function enterRobberyHouse(house)
     openHouseAnim()
     Wait(250)
     local coords = { x = Config.Houses[house]["coords"]["x"], y = Config.Houses[house]["coords"]["y"], z= Config.Houses[house]["coords"]["z"] - Config.MinZOffset}
-    local data
     if Config.Houses[house]["tier"] == 1 then
         data = exports['qb-interior']:CreateHouseRobbery(coords)
     end
@@ -204,7 +203,7 @@ end)
 
 RegisterNetEvent('qb-houserobbery:client:ResetHouseState', function(house)
     Config.Houses[house]["opened"] = false
-    for _, v in pairs(Config.Houses[house]["furniture"]) do
+    for k, v in pairs(Config.Houses[house]["furniture"]) do
         v["searched"] = false
     end
 end)
@@ -294,8 +293,8 @@ CreateThread(function()
             local hours = GetClockHours()
             if hours >= Config.MinimumTime or hours <= Config.MaximumTime then
                 if not inside then
-                    for k, _ in pairs(Config.Houses) do
-                        local dist = #(PlayerPos - vector3(Config.Houses[k]["coords"]["x"], Config.Houses[k]["coords"]["y"], Config.Houses[k]["coords"]["z"]))
+                    for k, v in pairs(Config.Houses) do
+                        dist = #(PlayerPos - vector3(Config.Houses[k]["coords"]["x"], Config.Houses[k]["coords"]["y"], Config.Houses[k]["coords"]["z"]))
                         if dist <= 1.5 then
                             closestHouse = k
                             inRange = true
@@ -342,7 +341,7 @@ CreateThread(function()
                 end
             end
 
-            for k, _ in pairs(Config.Houses[currentHouse]["furniture"]) do
+            for k, v in pairs(Config.Houses[currentHouse]["furniture"]) do
                 if #(pos - vector3(Config.Houses[currentHouse]["coords"]["x"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["x"], Config.Houses[currentHouse]["coords"]["y"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["y"], Config.Houses[currentHouse]["coords"]["z"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["z"] - Config.MinZOffset)) < 1 then
                     if not Config.Houses[currentHouse]["furniture"][k]["searched"] then
                         if not Config.Houses[currentHouse]["furniture"][k]["isBusy"] then
