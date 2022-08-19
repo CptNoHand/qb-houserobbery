@@ -87,6 +87,24 @@ local function PoliceCall()
     end
     if math.random(1, 100) <= chance then
         TriggerServerEvent('police:server:policeAlert', 'Attempted House Robbery')
+        local data = exports['cd_dispatch']:GetPlayerInfo()
+        TriggerServerEvent('cd_dispatch:AddNotification', {
+            job_table = {'police'}, 
+            coords = data.coords,
+            title = '10-05 - House Robbery',
+            message = 'A '..data.sex..' robbing a house at '..data.street, 
+            flash = 0,
+            unique_id = tostring(math.random(0000000,9999999)),
+            blip = {
+                sprite = 431, 
+                scale = 1.2, 
+                colour = 3,
+                flashes = false, 
+                text = '911 - House Robbery',
+                time = (5*60*1000),
+                sound = 1,
+            }
+        })
     end
 end
 
