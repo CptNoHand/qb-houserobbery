@@ -92,8 +92,8 @@ local function PoliceCall()
         TriggerServerEvent('cd_dispatch:AddNotification', {
             job_table = {'police'}, 
             coords = data.coords,
-            title = '10-05 - House Robbery',
-            message = 'A '..data.sex..' robbing a house at '..data.street, 
+            title = '10-100 - Verdächtige Situation',
+            message = 'A '..data.sex..' verdächtige Situation.. '..data.street, 
             flash = 0,
             unique_id = tostring(math.random(0000000,9999999)),
             blip = {
@@ -101,7 +101,7 @@ local function PoliceCall()
                 scale = 1.2, 
                 colour = 3,
                 flashes = false, 
-                text = '911 - House Robbery',
+                text = '911 - Verdächtige Situation',
                 time = (5*60*1000),
                 sound = 1,
             }
